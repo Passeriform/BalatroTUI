@@ -21,9 +21,15 @@ jobs:
       - uses: dtolnay/rust-toolchain@stable
 
       - name: Install cargo-workspaces
-      - uses: taiki-e/install-action@v2
+        uses: taiki-e/install-action@v2
         with:
           tool: cargo-workspaces
 
       - name: Publish to crates.io
-        run: cargo workspaces publish ${{ inputs.release-type }} --yes --all
+        run: |
+          cargo workspaces publish ${{ inputs.release-type }} \
+            --yes \
+            --all \
+            --from-git \
+            --token "${{ secrets.CARGO_TOKEN }}" \
+            --message "[Release] Released version v{{version}}! 🚀"
