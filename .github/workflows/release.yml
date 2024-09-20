@@ -1,0 +1,35 @@
+on:
+  workflow_dispatch:
+    inputs:
+      release-type:
+        type: choice
+        description: Choose major for API breaking changes, minor for functionality addition and patch for bugfixes or refactoring
+        options:
+          - major
+          - minor
+          - patch
+
+name: Publish
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: chainguard-dev/actions/setup-gitsign@main
+      - uses: dtolnay/rust-toolchain@stable
+
+      - name: Install cargo-release
+        uses: taiki-e/install-action@cargo-release
+
+      - name: Publish to crates.io
+        uses: cargo-bins/release-pr@v2
+        with:
+          crate-release-all: true
+          check-semver: false # Change to true after first release
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          version: ${{ inputs.release-type }}
+          pr-title: "[Release] Release BalatroTUI v<%= version.actual %>"
+          git-user-name: Passeriform
+          git-user-email: bhardwajutkarsh.ub@gmail.com
