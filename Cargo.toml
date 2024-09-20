@@ -23,7 +23,7 @@ keywords = ["game", "command-line", "cli", "cards"]
 license-file = "LICENSE"
 readme = "README.md"
 repository = "https://github.com/Passeriform/BalatroTUI"
-version = "0.1.0"
+version = "0.1.1-alpha.0"
 
 [workspace.metadata.release]
 

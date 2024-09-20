@@ -26,8 +26,8 @@ workspace = true
 # pub_use = "allow"
 
 [dependencies]
-balatro_tui_core = { path = "../balatro_tui_core", version = "*" }
-balatro_tui_widgets = { path = "../balatro_tui_widgets", version = "*" }
+balatro_tui_core = { path = "../balatro_tui_core", version = "0.1.1-alpha.0" }
+balatro_tui_widgets = { path = "../balatro_tui_widgets", version = "0.1.1-alpha.0" }
 better-panic = "0.3.0"
 color-eyre = "0.6.3"
 crossterm = { version = "0.28.1", default-features = false, features = ["event-stream"] }
