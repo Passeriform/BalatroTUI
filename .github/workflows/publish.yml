@@ -12,12 +12,28 @@ on:
 name: Publish
 
 jobs:
-  greet:
+  publish:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
+        with:
+          ssh-key: ${{ secrets.DEPLOY_KEY }}
+
       - uses: dtolnay/rust-toolchain@stable
 
+      - name: Install cargo-workspaces
+        uses: taiki-e/install-action@v2
+        with:
+          tool: cargo-workspaces
+
       - name: Publish to crates.io
-        run: cargo release --workspace --sign ${{ inputs.release-type }} --execute
+        run: |
+          git config --global user.name "Github Action"
+          git config --global user.email "<>"
+
+          cargo workspaces publish ${{ inputs.release-type }} \
+            --yes \
+            --all \
+            --token ${{ secrets.CARGO_TOKEN }} \
+            --message "[Release] Release version v%v! 🚀" \

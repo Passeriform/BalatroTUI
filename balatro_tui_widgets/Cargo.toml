@@ -20,7 +20,7 @@ doctest = true
 test = true
 
 [dependencies]
-balatro_tui_core = { path = "../balatro_tui_core" }
+balatro_tui_core = { path = "../balatro_tui_core", version = "*" }
 color-eyre = "0.6.3"    # Migrate to thiserror
 itertools = "0.13.0"
 ratatui = "0.28.1"
