@@ -15,15 +15,17 @@ use super::card::{Card, Rank, Sortable};
 /// A scoring hand has associated values of base `chips` and `multiplier` to be
 /// used when scoring the hand.
 ///
-/// [`ScoringHand`] also implements conversion from string representation
+/// [`ScoringHand`] also implements conversion from string representation.
 ///
 /// ```
-/// assert_eq!(ScoringHand::from("Flush"), ScoringHand::Flush);
+/// # use std::str::FromStr;
+/// # use balatro_tui_core::scorer::ScoringHand;
+/// assert_eq!(ScoringHand::from_str("Flush").unwrap(), ScoringHand::Flush);
 /// assert_eq!(
-///     ScoringHand::from("Four of a Kind"),
+///     ScoringHand::from_str("Four of a Kind").unwrap(),
 ///     ScoringHand::FourOfAKind
 /// );
-/// assert_eq!(ScoringHand::from("Two Pair"), ScoringHand::TwoPair);
+/// assert_eq!(ScoringHand::from_str("Two Pair").unwrap(), ScoringHand::TwoPair);
 /// ```
 ///
 /// The scoring hands are provided in order of scoring precedence (reverse in
@@ -264,10 +266,10 @@ impl Scorer {
         }
 
         if suit_groups[0].1 == 5 && rank_groups[0].1 == 5 {
-            return Ok((Some(ScoringHand::FlushFive), vec![
-                rank_groups[0].0;
-                rank_groups[0].1
-            ]));
+            return Ok((
+                Some(ScoringHand::FlushFive),
+                vec![rank_groups[0].0; rank_groups[0].1],
+            ));
         }
 
         if rank_groups.len() >= 2
@@ -282,10 +284,10 @@ impl Scorer {
         }
 
         if rank_groups[0].1 == 5 {
-            return Ok((Some(ScoringHand::FiveOfAKind), vec![
-                rank_groups[0].0;
-                rank_groups[0].1
-            ]));
+            return Ok((
+                Some(ScoringHand::FiveOfAKind),
+                vec![rank_groups[0].0; rank_groups[0].1],
+            ));
         }
 
         if suit_groups[0].1 == 5 {
@@ -299,10 +301,10 @@ impl Scorer {
         }
 
         if rank_groups[0].1 == 4 {
-            return Ok((Some(ScoringHand::FourOfAKind), vec![
-                rank_groups[0].0;
-                rank_groups[0].1
-            ]));
+            return Ok((
+                Some(ScoringHand::FourOfAKind),
+                vec![rank_groups[0].0; rank_groups[0].1],
+            ));
         }
 
         if rank_groups.len() >= 2 && rank_groups[0].1 == 3 && rank_groups[1].1 == 2 {
@@ -324,10 +326,10 @@ impl Scorer {
         }
 
         if rank_groups[0].1 == 3 {
-            return Ok((Some(ScoringHand::ThreeOfAKind), vec![
-                rank_groups[0].0;
-                rank_groups[0].1
-            ]));
+            return Ok((
+                Some(ScoringHand::ThreeOfAKind),
+                vec![rank_groups[0].0; rank_groups[0].1],
+            ));
         }
 
         if rank_groups.len() >= 2 && rank_groups[0].1 == 2 && rank_groups[1].1 == 2 {
@@ -338,16 +340,16 @@ impl Scorer {
         }
 
         if rank_groups[0].1 == 2 {
-            return Ok((Some(ScoringHand::Pair), vec![
-                rank_groups[0].0;
-                rank_groups[0].1
-            ]));
+            return Ok((
+                Some(ScoringHand::Pair),
+                vec![rank_groups[0].0; rank_groups[0].1],
+            ));
         }
 
-        Ok((Some(ScoringHand::HighCard), vec![
-            rank_groups[0].0;
-            rank_groups[0].1
-        ]))
+        Ok((
+            Some(ScoringHand::HighCard),
+            vec![rank_groups[0].0; rank_groups[0].1],
+        ))
     }
 
     /// Score played cards and return the computed score.

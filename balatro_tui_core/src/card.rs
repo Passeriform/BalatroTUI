@@ -29,6 +29,8 @@ use unicode_segmentation::UnicodeSegmentation;
 /// and first letter notation.
 ///
 /// ```
+/// # use std::str::FromStr;
+/// # use balatro_tui_core::card::Suit;
 /// let parsed_suits = ["♣", "♦", "♥", "♠"].map(|suit| Suit::from_str(suit).unwrap());
 /// let expected_suits = [Suit::Club, Suit::Diamond, Suit::Heart, Suit::Spade];
 ///
@@ -36,6 +38,8 @@ use unicode_segmentation::UnicodeSegmentation;
 /// ```
 ///
 /// ```
+/// # use std::str::FromStr;
+/// # use balatro_tui_core::card::Suit;
 /// let parsed_suits = ["C", "D", "H", "S"].map(|suit| Suit::from_str(suit).unwrap());
 /// let expected_suits = [Suit::Club, Suit::Diamond, Suit::Heart, Suit::Spade];
 ///
@@ -46,12 +50,14 @@ use unicode_segmentation::UnicodeSegmentation;
 /// over suit values.
 ///
 /// ```
-/// assert_eq!(Suit::iter().collect(), [
+/// # use strum::IntoEnumIterator;
+/// # use balatro_tui_core::card::Suit;
+/// assert_eq!(Suit::iter().collect::<Vec<Suit>>(), vec![
 ///     Suit::Club,
 ///     Suit::Diamond,
 ///     Suit::Heart,
 ///     Suit::Spade
-/// ])
+/// ]);
 /// ```
 #[derive(
     Clone,
@@ -89,6 +95,8 @@ pub enum Suit {
 /// representation.
 ///
 /// ```
+/// # use std::str::FromStr;
+/// # use balatro_tui_core::card::Rank;
 /// let parsed_ranks = ["A", "3", "10", "J", "Q", "K"].map(|rank| Rank::from_str(rank).unwrap());
 /// let expected_ranks = [
 ///     Rank::Ace,
@@ -118,6 +126,7 @@ pub enum Suit {
 /// custom checks for wrap-around instances (like straights).
 ///
 /// ```
+/// # use balatro_tui_core::card::Rank;
 /// let mut unsorted_ranks = [Rank::Seven, Rank::King, Rank::Two, Rank::Ace];
 /// let sorted_ranks = [Rank::Ace, Rank::King, Rank::Seven, Rank::Two];
 ///
@@ -151,7 +160,7 @@ pub enum Suit {
 )]
 pub enum Rank {
     /// Ace rank (A)
-    #[strum(serialize = "A", props(score = "10"))]
+    #[strum(serialize = "A", serialize = "1", props(score = "10"))]
     Ace = 1,
     /// Two rank (2)
     #[strum(serialize = "2", props(score = "2"))]
@@ -181,13 +190,13 @@ pub enum Rank {
     #[strum(serialize = "10", props(score = "10"))]
     Ten,
     /// Jack rank (11)
-    #[strum(serialize = "J", props(score = "10"))]
+    #[strum(serialize = "J", serialize = "11", props(score = "10"))]
     Jack,
     /// Queen rank (12)
-    #[strum(serialize = "Q", props(score = "10"))]
+    #[strum(serialize = "Q", serialize = "12", props(score = "10"))]
     Queen,
     /// King rank (13)
-    #[strum(serialize = "K", props(score = "10"))]
+    #[strum(serialize = "K", serialize = "13", props(score = "10"))]
     King,
 }
 
@@ -250,13 +259,16 @@ impl Sub for Rank {
 /// A standard pack of 52 cards can be expressed using this representation.
 ///
 /// Card can also be created by parsing from unicode or representational string.
+///
 /// ```
-/// assert_eq!(Card::from("J♣"), Card { rank: Rank::Ace, suit: Suit::Club })
-/// assert_eq!(Card::from("10♥"), Card { rank: Rank::Ten, suit: Suit::Heart })
-/// assert_eq!(Card::from("12♣"), Card { rank: Rank::Queen, suit: Suit::Club })
-/// assert_eq!(Card::from("5H"), Card { rank: Rank::Five, suit: Suit::Heart })
-/// assert_eq!(Card::from("7S"), Card { rank: Rank::Seven, suit: Suit::Spade })
-/// assert_eq!(Card::from("11D"), Card { rank: Rank::Jack, suit: Suit::Diamond })
+/// # use std::str::FromStr;
+/// # use balatro_tui_core::card::{Card, Rank, Suit};
+/// assert_eq!(Card::from_str("J♣").unwrap(), Card { rank: Rank::Jack, suit: Suit::Club });
+/// assert_eq!(Card::from_str("10♥").unwrap(), Card { rank: Rank::Ten, suit: Suit::Heart });
+/// assert_eq!(Card::from_str("12♣").unwrap(), Card { rank: Rank::Queen, suit: Suit::Club });
+/// assert_eq!(Card::from_str("5H").unwrap(), Card { rank: Rank::Five, suit: Suit::Heart });
+/// assert_eq!(Card::from_str("7S").unwrap(), Card { rank: Rank::Seven, suit: Suit::Spade });
+/// assert_eq!(Card::from_str("11D").unwrap(), Card { rank: Rank::Jack, suit: Suit::Diamond });
 /// ```
 #[derive(Clone, Copy, Debug, Ord, PartialOrd, PartialEq, Eq, Hash)]
 pub struct Card {
@@ -408,6 +420,242 @@ mod tests {
         let expected_suits = [Suit::Club, Suit::Diamond, Suit::Heart, Suit::Spade];
 
         assert_eq!(parsed_suits, expected_suits);
+    }
+
+    #[test]
+    fn rank_from_str() {
+        let parsed_ranks =
+            ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"].map(|rank| Rank::from_str(rank).unwrap());
+
+        let expected_ranks = [
+            Rank::Ace,
+            Rank::Two,
+            Rank::Three,
+            Rank::Four,
+            Rank::Five,
+            Rank::Six,
+            Rank::Seven,
+            Rank::Eight,
+            Rank::Nine,
+            Rank::Ten,
+            Rank::Jack,
+            Rank::Queen,
+            Rank::King,
+        ];
+
+        assert_eq!(parsed_ranks, expected_ranks);
+    }
+
+    #[test]
+    fn rank_from_repr() {
+        let parsed_ranks =
+            ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13"].map(|rank| Rank::from_str(rank).unwrap());
+
+        let expected_ranks = [
+            Rank::Ace,
+            Rank::Two,
+            Rank::Three,
+            Rank::Four,
+            Rank::Five,
+            Rank::Six,
+            Rank::Seven,
+            Rank::Eight,
+            Rank::Nine,
+            Rank::Ten,
+            Rank::Jack,
+            Rank::Queen,
+            Rank::King,
+        ];
+
+        assert_eq!(parsed_ranks, expected_ranks);
+    }
+
+    #[test]
+    fn card_from_repr_rank_str_suit() {
+        let parsed_cards = [
+            "1C", "2D", "3H", "4S", "5C", "6D", "7H", "8S", "9C", "10D", "11H", "12S", "13C",
+        ]
+        .map(|card| Card::from_str(card).unwrap());
+
+        let expected_cards = [
+            Card {
+                rank: Rank::Ace,
+                suit: Suit::Club,
+            },
+            Card {
+                rank: Rank::Two,
+                suit: Suit::Diamond,
+            },
+            Card {
+                rank: Rank::Three,
+                suit: Suit::Heart,
+            },
+            Card {
+                rank: Rank::Four,
+                suit: Suit::Spade,
+            },
+            Card {
+                rank: Rank::Five,
+                suit: Suit::Club,
+            },
+            Card {
+                rank: Rank::Six,
+                suit: Suit::Diamond,
+            },
+            Card {
+                rank: Rank::Seven,
+                suit: Suit::Heart,
+            },
+            Card {
+                rank: Rank::Eight,
+                suit: Suit::Spade,
+            },
+            Card {
+                rank: Rank::Nine,
+                suit: Suit::Club,
+            },
+            Card {
+                rank: Rank::Ten,
+                suit: Suit::Diamond,
+            },
+            Card {
+                rank: Rank::Jack,
+                suit: Suit::Heart,
+            },
+            Card {
+                rank: Rank::Queen,
+                suit: Suit::Spade,
+            },
+            Card {
+                rank: Rank::King,
+                suit: Suit::Club,
+            },
+        ];
+
+        assert_eq!(parsed_cards, expected_cards);
+    }
+
+    #[test]
+    fn card_from_repr_rank_unicode_suit() {
+        let parsed_cards = [
+            "1♣", "2♦", "3♥", "4♠", "5♣", "6♦", "7♥", "8♠", "9♣", "10♦", "11♥", "12♠", "13♣",
+        ]
+        .map(|card| Card::from_str(card).unwrap());
+
+        let expected_cards = [
+            Card {
+                rank: Rank::Ace,
+                suit: Suit::Club,
+            },
+            Card {
+                rank: Rank::Two,
+                suit: Suit::Diamond,
+            },
+            Card {
+                rank: Rank::Three,
+                suit: Suit::Heart,
+            },
+            Card {
+                rank: Rank::Four,
+                suit: Suit::Spade,
+            },
+            Card {
+                rank: Rank::Five,
+                suit: Suit::Club,
+            },
+            Card {
+                rank: Rank::Six,
+                suit: Suit::Diamond,
+            },
+            Card {
+                rank: Rank::Seven,
+                suit: Suit::Heart,
+            },
+            Card {
+                rank: Rank::Eight,
+                suit: Suit::Spade,
+            },
+            Card {
+                rank: Rank::Nine,
+                suit: Suit::Club,
+            },
+            Card {
+                rank: Rank::Ten,
+                suit: Suit::Diamond,
+            },
+            Card {
+                rank: Rank::Jack,
+                suit: Suit::Heart,
+            },
+            Card {
+                rank: Rank::Queen,
+                suit: Suit::Spade,
+            },
+            Card {
+                rank: Rank::King,
+                suit: Suit::Club,
+            },
+        ];
+
+        assert_eq!(parsed_cards, expected_cards);
+    }
+
+    #[test]
+    fn card_from_str_rank_and_str_suit() {
+        let parsed_cards = [
+            "AC", "JD", "QH", "KS"
+        ]
+        .map(|card| Card::from_str(card).unwrap());
+
+        let expected_cards = [
+            Card {
+                rank: Rank::Ace,
+                suit: Suit::Club,
+            },
+            Card {
+                rank: Rank::Jack,
+                suit: Suit::Diamond,
+            },
+            Card {
+                rank: Rank::Queen,
+                suit: Suit::Heart,
+            },
+            Card {
+                rank: Rank::King,
+                suit: Suit::Spade,
+            },
+        ];
+
+        assert_eq!(parsed_cards, expected_cards);
+    }
+
+    #[test]
+    fn card_from_str_rank_and_unicode_suit() {
+        let parsed_cards = [
+            "A♣", "J♦", "Q♥", "K♠",
+        ]
+        .map(|card| Card::from_str(card).unwrap());
+
+        let expected_cards = [
+            Card {
+                rank: Rank::Ace,
+                suit: Suit::Club,
+            },
+            Card {
+                rank: Rank::Jack,
+                suit: Suit::Diamond,
+            },
+            Card {
+                rank: Rank::Queen,
+                suit: Suit::Heart,
+            },
+            Card {
+                rank: Rank::King,
+                suit: Suit::Spade,
+            },
+        ];
+
+        assert_eq!(parsed_cards, expected_cards);
     }
 
     #[test]

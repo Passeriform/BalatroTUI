@@ -52,6 +52,9 @@ pub trait SelectableList {
 /// [`Self::from()`] implementation.
 ///
 /// ```
+/// # use std::sync::{Arc, Mutex};
+/// # use balatro_tui_core::card::{Card, Rank, Suit};
+/// # use balatro_tui_widgets::CardListWidgetState;
 /// let cards = vec![
 ///     Card {
 ///         rank: Rank::Ace,
@@ -61,9 +64,9 @@ pub trait SelectableList {
 ///         rank: Rank::Ten,
 ///         suit: Suit::Heart,
 ///     },
-/// ]
+/// ];
 ///
-/// let list_state = CardList::from(Arc::from(Mutex::from(cards)))
+/// let list_state = CardListWidgetState::from(Arc::from(Mutex::from(cards)));
 /// ```
 #[derive(Debug)]
 pub struct CardListWidgetState {
@@ -204,24 +207,30 @@ impl SelectableList for CardListWidgetState {
 /// [`Self::new()`] method.
 ///
 /// ```
+/// # use std::sync::{Arc, Mutex};
+/// # use ratatui::{buffer::Buffer, layout::Rect, prelude::*};
+/// # use balatro_tui_core::card::{Card, Rank, Suit};
+/// # use balatro_tui_widgets::{CardListWidget, CardListWidgetState};
 /// let area = Rect::new(0, 0, 100, 100);
 /// let mut buffer = Buffer::empty(area);
-/// let mut card_list = CardListWidgetState::from(&vec![
-///     Card {
-///         rank: Rank::Ace,
-///         suit: Suit::Club,
-///     },
-///     Card {
-///         rank: Rank::Two,
-///         suit: Suit::Heart,
-///     },
-///     Card {
-///         rank: Rank::Ten,
-///         suit: Suit::Diamond,
-///     },
-/// ])
+/// let mut card_list = CardListWidgetState::from(
+///     Arc::from(Mutex::from(vec![
+///         Card {
+///             rank: Rank::Ace,
+///             suit: Suit::Club,
+///         },
+///         Card {
+///             rank: Rank::Two,
+///             suit: Suit::Heart,
+///         },
+///         Card {
+///             rank: Rank::Ten,
+///             suit: Suit::Diamond,
+///         },
+///     ]))
+/// );
 ///
-/// CardListWidget::new().render(area, buffer, &mut card_list);
+/// CardListWidget::new().render(area, &mut buffer, &mut card_list);
 /// ```
 #[derive(Clone, Copy, Debug, Default)]
 pub struct CardListWidget;

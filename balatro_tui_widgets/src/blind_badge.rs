@@ -17,13 +17,15 @@ use ratatui::{
 /// [`Self::new()`] method.
 ///
 /// ```
+/// # use ratatui::{buffer::Buffer, layout::Rect, prelude::Widget, style::Color, text::Line};
+/// # use balatro_tui_widgets::BlindBadgeWidget;
 /// let area = Rect::new(0, 0, 100, 100);
 /// let mut buffer = Buffer::empty(area);
 ///
 /// BlindBadgeWidget::new()
 ///     .color(Color::Green)
 ///     .content(Line::from("Small Blind"))
-///     .render(area, buffer);
+///     .render(area, &mut buffer);
 /// ```
 #[derive(Clone, Debug, Default)]
 pub struct BlindBadgeWidget {

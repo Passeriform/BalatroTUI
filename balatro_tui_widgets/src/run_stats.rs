@@ -31,6 +31,8 @@ pub struct RunStatsWidgetState {
 /// [`Self::new()`] method.
 ///
 /// ```
+/// # use ratatui::{buffer::Buffer, layout::Rect, prelude::StatefulWidget};
+/// # use balatro_tui_widgets::{RunStatsWidgetState, RunStatsWidget};
 /// let area = Rect::new(0, 0, 100, 100);
 /// let mut buffer = Buffer::empty(area);
 /// let mut state = RunStatsWidgetState {
@@ -41,7 +43,7 @@ pub struct RunStatsWidgetState {
 ///     round: 5,
 /// };
 ///
-/// RunStatsWidget::new().render(area, buffer, &mut state);
+/// RunStatsWidget::new().render(area, &mut buffer, &mut state);
 /// ```
 #[derive(Clone, Copy, Debug, Default)]
 pub struct RunStatsWidget;

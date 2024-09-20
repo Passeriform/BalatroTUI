@@ -17,11 +17,13 @@ pub const ROUND_SCORE_CONTENT_HEIGHT: u16 = 5;
 /// [`Self::new()`] method.
 ///
 /// ```
+/// # use ratatui::{buffer::Buffer, layout::Rect, prelude::StatefulWidget};
+/// # use balatro_tui_widgets::RoundScoreWidget;
 /// let area = Rect::new(0, 0, 100, 100);
 /// let mut buffer = Buffer::empty(area);
 /// let mut score = 2000;
 ///
-/// RoundScoreWidget::new().render(area, buffer, &mut score);
+/// RoundScoreWidget::new().render(area, &mut buffer, &mut score);
 /// ```
 #[derive(Clone, Copy, Debug, Default)]
 pub struct RoundScoreWidget;

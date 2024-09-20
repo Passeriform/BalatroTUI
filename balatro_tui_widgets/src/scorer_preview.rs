@@ -30,17 +30,34 @@ pub struct ScorerPreviewWidgetState {
 /// [`Self::new()`] method.
 ///
 /// ```
+/// # use ratatui::{buffer::Buffer, layout::Rect, prelude::StatefulWidget};
+/// # use balatro_tui_core::scorer::ScoringHand;
+/// # use balatro_tui_widgets::{ScorerPreviewWidget, ScorerPreviewWidgetState};
 /// let area = Rect::new(0, 0, 100, 100);
 /// let mut buffer = Buffer::empty(area);
 /// let mut cards = ScorerPreviewWidgetState {
 ///     chips: 10,
 ///     level: 2,
-///     multiplier: 5
-///     scoring_hand_text: ScoringHand::,
-///     suit: Suit::Club,
+///     multiplier: 5,
+///     scoring_hand_text: Some(ScoringHand::FourOfAKind.to_string()),
 /// };
 ///
-/// ScorerPreviewWidget::new().render(area, buffer, &mut cards)
+/// ScorerPreviewWidget::new().render(area, &mut buffer, &mut cards)
+/// ```
+///
+/// /// ```
+/// # use ratatui::{buffer::Buffer, layout::Rect, prelude::StatefulWidget};
+/// # use balatro_tui_widgets::{ScorerPreviewWidget, ScorerPreviewWidgetState};
+/// let area = Rect::new(0, 0, 100, 100);
+/// let buffer = Buffer::empty(area);
+/// let cards = ScorerPreviewWidgetState {
+///     chips: 10,
+///     level: 2,
+///     multiplier: 5,
+///     scoring_hand_text: None,
+/// };
+///
+/// ScorerPreviewWidget::new().render(area, &mut buffer, &mut cards)
 /// ```
 #[derive(Clone, Copy, Debug, Default)]
 pub struct ScorerPreviewWidget;

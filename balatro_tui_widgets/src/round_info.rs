@@ -24,15 +24,17 @@ const KERNING_MULTIPLIER: u16 = 2;
 /// [`Self::new()`] method.
 ///
 /// ```
+/// # use ratatui::{buffer::Buffer, layout::Rect, prelude::Widget, style::Color};
+/// # use balatro_tui_widgets::RoundInfoWidget;
 /// let area = Rect::new(0, 0, 100, 100);
 /// let mut buffer = Buffer::empty(area);
 ///
 /// RoundInfoWidget::new()
 ///     .blind_color(Color::Red)
-///     .blind_text("Small Blind")
+///     .blind_text("Small Blind".to_string())
 ///     .reward(5)
-///     .target_score()
-///     .render(area, buffer);
+///     .target_score(500)
+///     .render(area, &mut buffer);
 /// ```
 #[derive(Clone, Debug, Default)]
 pub struct RoundInfoWidget {

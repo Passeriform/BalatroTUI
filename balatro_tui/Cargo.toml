@@ -15,9 +15,11 @@ version.workspace = true
 [lints]
 workspace = true
 
+# Enable when overriding is added to cargo.
+#
 # [lints.rust]
 # unused_extern_crates = "allow"  # Required for `human_panic`
-
+#
 # [lints.clippy]
 # module_name_repetitions = "allow"
 # missing_errors_doc = "allow"

@@ -15,6 +15,10 @@ version.workspace = true
 [lints]
 workspace = true
 
+[lib]
+doctest = true
+test = true
+
 [dependencies]
 balatro_tui_core = { path = "../balatro_tui_core" }
 color-eyre = "0.6.3"    # Migrate to thiserror

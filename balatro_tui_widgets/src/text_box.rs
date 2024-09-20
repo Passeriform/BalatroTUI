@@ -11,14 +11,16 @@ use ratatui::{
 /// [`Self::new()`] method.
 ///
 /// ```
+/// # use ratatui::{buffer::Buffer, layout::Rect, prelude::*, text::Line};
+/// # use balatro_tui_widgets::TextBoxWidget;
 /// let area = Rect::new(0, 0, 100, 100);
 /// let mut buffer = Buffer::empty(area);
-/// let line: Vec<Text> = [
+/// let lines: Vec<Line> = vec![
 ///     "Some text".into(),
 ///     "Some other text".into(),
 /// ];
 ///
-/// TextBoxWidget::new(line).render(area, buffer);
+/// TextBoxWidget::new(lines).render(area, &mut buffer);
 /// ```
 ///
 /// Additionally border and title can be specified to set style for text box.
@@ -26,31 +28,35 @@ use ratatui::{
 /// content.
 ///
 /// ```
+/// # use ratatui::{buffer::Buffer, layout::{Constraint, Flex, Rect}, prelude::*, text::Line, widgets::{Block, BorderType}};
+/// # use balatro_tui_widgets::TextBoxWidget;
 /// let area = Rect::new(0, 0, 100, 100);
 /// let mut buffer = Buffer::empty(area);
-/// let line: Vec<Text> = ["Some text".into(), "Some other text".into()];
+/// let lines: Vec<Line> = vec!["Some text".into(), "Some other text".into()];
 ///
-/// TextBoxWidget::new(line)
+/// TextBoxWidget::new(lines)
 ///     .border_block(Block::bordered().border_type(BorderType::Rounded))
 ///     .title("Title")
 ///     .constraints([Constraint::Length(1), Constraint::Length(1)])
 ///     .flex(Flex::SpaceAround)
-///     .render(area, buffer);
+///     .render(area, &mut buffer);
 /// ```
 ///
 /// [`TextBoxWidget`] also provides [`Self::bordered()`] utility method as a
 /// shorthand to create bordered text boxes.
 ///
 /// ```
+/// # use ratatui::{buffer::Buffer, layout::{Flex, Rect}, prelude::*, text::Line};
+/// # use balatro_tui_widgets::TextBoxWidget;
 /// let area = Rect::new(0, 0, 100, 100);
 /// let mut buffer = Buffer::empty(area);
-/// let line: Vec<Text> = vec!["Some text".into(), "Some other text".into()];
+/// let lines: Vec<Line> = vec!["Some text".into(), "Some other text".into()];
 ///
-/// TextBoxWidget::bordered(line)
+/// TextBoxWidget::bordered(lines)
 ///     .title("Title")
 ///     .constraints([Constraint::Length(1), Constraint::Length(1)])
 ///     .flex(Flex::SpaceAround)
-///     .render(area, buffer);
+///     .render(area, &mut buffer);
 /// ```
 #[derive(Clone, Debug, Default)]
 pub struct TextBoxWidget<'widget> {

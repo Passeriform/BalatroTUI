@@ -29,6 +29,9 @@ pub const CARD_CONTENT_HEIGHT: u16 = 9;
 /// [`Self::new()`] method.
 ///
 /// ```
+/// # use ratatui::{buffer::Buffer, layout::Rect, prelude::StatefulWidget, style::Color, symbols::border, text::Line};
+/// # use balatro_tui_core::card::{Card, Rank, Suit};
+/// # use balatro_tui_widgets::CardWidget;
 /// let area = Rect::new(0, 0, 100, 100);
 /// let mut buffer = Buffer::empty(area);
 /// let mut card = Card {
@@ -36,7 +39,7 @@ pub const CARD_CONTENT_HEIGHT: u16 = 9;
 ///     suit: Suit::Club,
 /// };
 ///
-/// CardWidget::bordered(border::THICK).render(area, buffer, &mut card);
+/// CardWidget::bordered(border::THICK).render(area, &mut buffer, &mut card);
 /// ```
 ///
 /// A hovered card is represented with border as [`border::THICK`], otherwise
