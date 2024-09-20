@@ -26,4 +26,4 @@ jobs:
           tool: cargo-workspaces
 
       - name: Publish to crates.io
-        run: cargo workspaces publish --yes --all ${{ inputs.release-type }}
+        run: cargo workspaces publish ${{ inputs.release-type }} --yes --all
