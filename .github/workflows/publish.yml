@@ -1,0 +1,29 @@
+on:
+  workflow_dispatch:
+    inputs:
+      release-type:
+        type: choice
+        description: Choose major for API breaking changes, minor for functionality addition and patch for bugfixes or refactoring
+        options:
+          - major
+          - minor
+          - patch
+
+name: Publish
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: chainguard-dev/actions/setup-gitsign@main
+      - uses: dtolnay/rust-toolchain@stable
+
+      - name: Install cargo-workspaces
+      - uses: taiki-e/install-action@v2
+        with:
+          tool: cargo-workspaces
+
+      - name: Publish to crates.io
+        run: cargo workspaces publish --yes --all ${{ inputs.release-type }}
