@@ -23,16 +23,14 @@ keywords = ["game", "command-line", "cli", "cards"]
 license-file = "LICENSE"
 readme = "README.md"
 repository = "https://github.com/Passeriform/BalatroTUI"
-version = "0.1.1"
+version = "0.1.0"
 
 [workspace.metadata.release]
-enable-all-features = true
-pre-release-commit-message = "[Release] Release version {{version}}."
-sign-commit = true
-sign-tag = true
-shared-version = true
-tag-message = "v{{version}} Released! 🚀"
-tag-name = "v{{version}}"
+
+[workspace.metadata.workspaces]
+exact = true
+no_individual_tags = true
+message = "[Release] Released version v{{version}}! 🚀"
 
 [workspace.lints.rust]
 warnings = { priority = -1, level = "warn" }
