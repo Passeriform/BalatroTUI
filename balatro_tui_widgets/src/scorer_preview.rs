@@ -45,7 +45,7 @@ pub struct ScorerPreviewWidgetState {
 /// ScorerPreviewWidget::new().render(area, &mut buffer, &mut cards)
 /// ```
 ///
-/// /// ```
+/// ```
 /// # use ratatui::{buffer::Buffer, layout::Rect, prelude::StatefulWidget};
 /// # use balatro_tui_widgets::{ScorerPreviewWidget, ScorerPreviewWidgetState};
 /// let area = Rect::new(0, 0, 100, 100);

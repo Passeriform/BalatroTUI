@@ -66,8 +66,16 @@ impl Tui {
     /// Suspends Tui instance.
     pub fn suspend(&self) -> Result<()> {
         self.exit()?;
+        #[expect(
+            unsafe_code,
+            reason = "Intended: Instead of directly exiting, this allows terminal to cleanup and return back to normal mode."
+        )]
         #[cfg(not(windows))]
-        raise(SIGTSTP)?;
+        // SAFETY: Sending terminal stop signal marks the end of the terminal access operations.
+        // There should be no operation sent after this point.
+        unsafe {
+            _ = libc::raise(libc::SIGTSTP);
+        }
         Ok(())
     }
 

@@ -213,22 +213,20 @@ impl SelectableList for CardListWidgetState {
 /// # use balatro_tui_widgets::{CardListWidget, CardListWidgetState};
 /// let area = Rect::new(0, 0, 100, 100);
 /// let mut buffer = Buffer::empty(area);
-/// let mut card_list = CardListWidgetState::from(
-///     Arc::from(Mutex::from(vec![
-///         Card {
-///             rank: Rank::Ace,
-///             suit: Suit::Club,
-///         },
-///         Card {
-///             rank: Rank::Two,
-///             suit: Suit::Heart,
-///         },
-///         Card {
-///             rank: Rank::Ten,
-///             suit: Suit::Diamond,
-///         },
-///     ]))
-/// );
+/// let mut card_list = CardListWidgetState::from(Arc::from(Mutex::from(vec![
+///     Card {
+///         rank: Rank::Ace,
+///         suit: Suit::Club,
+///     },
+///     Card {
+///         rank: Rank::Two,
+///         suit: Suit::Heart,
+///     },
+///     Card {
+///         rank: Rank::Ten,
+///         suit: Suit::Diamond,
+///     },
+/// ])));
 ///
 /// CardListWidget::new().render(area, &mut buffer, &mut card_list);
 /// ```

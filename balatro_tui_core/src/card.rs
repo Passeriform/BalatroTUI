@@ -46,7 +46,7 @@ use unicode_segmentation::UnicodeSegmentation;
 /// assert_eq!(parsed_suits, expected_suits);
 /// ```
 ///
-/// Suit provides [`Suit::iter()`] method that can be used to create an iterator
+/// Suit provides `Suit::iter()` method that can be used to create an iterator
 /// over suit values.
 ///
 /// ```
@@ -263,12 +263,30 @@ impl Sub for Rank {
 /// ```
 /// # use std::str::FromStr;
 /// # use balatro_tui_core::card::{Card, Rank, Suit};
-/// assert_eq!(Card::from_str("J♣").unwrap(), Card { rank: Rank::Jack, suit: Suit::Club });
-/// assert_eq!(Card::from_str("10♥").unwrap(), Card { rank: Rank::Ten, suit: Suit::Heart });
-/// assert_eq!(Card::from_str("12♣").unwrap(), Card { rank: Rank::Queen, suit: Suit::Club });
-/// assert_eq!(Card::from_str("5H").unwrap(), Card { rank: Rank::Five, suit: Suit::Heart });
-/// assert_eq!(Card::from_str("7S").unwrap(), Card { rank: Rank::Seven, suit: Suit::Spade });
-/// assert_eq!(Card::from_str("11D").unwrap(), Card { rank: Rank::Jack, suit: Suit::Diamond });
+/// assert_eq!(Card::from_str("J♣").unwrap(), Card {
+///     rank: Rank::Jack,
+///     suit: Suit::Club,
+/// });
+/// assert_eq!(Card::from_str("10♥").unwrap(), Card {
+///     rank: Rank::Ten,
+///     suit: Suit::Heart,
+/// });
+/// assert_eq!(Card::from_str("12♣").unwrap(), Card {
+///     rank: Rank::Queen,
+///     suit: Suit::Club,
+/// });
+/// assert_eq!(Card::from_str("5H").unwrap(), Card {
+///     rank: Rank::Five,
+///     suit: Suit::Heart,
+/// });
+/// assert_eq!(Card::from_str("7S").unwrap(), Card {
+///     rank: Rank::Seven,
+///     suit: Suit::Spade,
+/// });
+/// assert_eq!(Card::from_str("11D").unwrap(), Card {
+///     rank: Rank::Jack,
+///     suit: Suit::Diamond,
+/// });
 /// ```
 #[derive(Clone, Copy, Debug, Ord, PartialOrd, PartialEq, Eq, Hash)]
 pub struct Card {
@@ -424,8 +442,10 @@ mod tests {
 
     #[test]
     fn rank_from_str() {
-        let parsed_ranks =
-            ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"].map(|rank| Rank::from_str(rank).unwrap());
+        let parsed_ranks = [
+            "A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K",
+        ]
+        .map(|rank| Rank::from_str(rank).unwrap());
 
         let expected_ranks = [
             Rank::Ace,
@@ -448,8 +468,10 @@ mod tests {
 
     #[test]
     fn rank_from_repr() {
-        let parsed_ranks =
-            ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13"].map(|rank| Rank::from_str(rank).unwrap());
+        let parsed_ranks = [
+            "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13",
+        ]
+        .map(|rank| Rank::from_str(rank).unwrap());
 
         let expected_ranks = [
             Rank::Ace,
@@ -602,10 +624,7 @@ mod tests {
 
     #[test]
     fn card_from_str_rank_and_str_suit() {
-        let parsed_cards = [
-            "AC", "JD", "QH", "KS"
-        ]
-        .map(|card| Card::from_str(card).unwrap());
+        let parsed_cards = ["AC", "JD", "QH", "KS"].map(|card| Card::from_str(card).unwrap());
 
         let expected_cards = [
             Card {
@@ -631,10 +650,7 @@ mod tests {
 
     #[test]
     fn card_from_str_rank_and_unicode_suit() {
-        let parsed_cards = [
-            "A♣", "J♦", "Q♥", "K♠",
-        ]
-        .map(|card| Card::from_str(card).unwrap());
+        let parsed_cards = ["A♣", "J♦", "Q♥", "K♠"].map(|card| Card::from_str(card).unwrap());
 
         let expected_cards = [
             Card {

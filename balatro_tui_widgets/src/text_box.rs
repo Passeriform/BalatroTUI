@@ -15,10 +15,7 @@ use ratatui::{
 /// # use balatro_tui_widgets::TextBoxWidget;
 /// let area = Rect::new(0, 0, 100, 100);
 /// let mut buffer = Buffer::empty(area);
-/// let lines: Vec<Line> = vec![
-///     "Some text".into(),
-///     "Some other text".into(),
-/// ];
+/// let lines: Vec<Line> = vec!["Some text".into(), "Some other text".into()];
 ///
 /// TextBoxWidget::new(lines).render(area, &mut buffer);
 /// ```

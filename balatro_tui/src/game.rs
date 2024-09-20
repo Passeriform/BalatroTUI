@@ -169,7 +169,7 @@ impl Game {
                     .as_ref()
                     .ok_or_eyre("Card list widget state not initialized yet.")?
                     .selected,
-            ),
+            )?,
         )?
         .0;
         let (chips, multiplier) = if let Some(scoring_hand) = scoring_hand_opt {
@@ -370,7 +370,7 @@ where
     Self: IntoIterator + Sized,
 {
     /// Returns a cloned [`Vec`] based on arbitrary indices set.
-    fn peek_at_index_set(&self, index_set: &HashSet<usize>) -> Self;
+    fn peek_at_index_set(&self, index_set: &HashSet<usize>) -> Result<Self>;
     /// Drains the iterator based on arbitrary indices (see [`Vec::drain()`] for
     /// equivalent usage with contiguous range) and returns the drained items in
     /// a [`Vec`].
@@ -378,8 +378,15 @@ where
 }
 
 impl HashedContainer for Vec<Card> {
-    fn peek_at_index_set(&self, index_set: &HashSet<usize>) -> Self {
-        index_set.iter().map(|&idx| self[idx]).collect()
+    fn peek_at_index_set(&self, index_set: &HashSet<usize>) -> Result<Self> {
+        index_set
+            .iter()
+            .map(|&idx| {
+                self.get(idx)
+                    .copied()
+                    .ok_or_eyre("Invalid index accessed. Index set may be invalid.")
+            })
+            .process_results(|iter| iter.collect())
     }
 
     fn drain_from_index_set(&mut self, index_set: &HashSet<usize>) -> Result<Self> {

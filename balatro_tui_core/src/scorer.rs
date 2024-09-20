@@ -25,7 +25,10 @@ use super::card::{Card, Rank, Sortable};
 ///     ScoringHand::from_str("Four of a Kind").unwrap(),
 ///     ScoringHand::FourOfAKind
 /// );
-/// assert_eq!(ScoringHand::from_str("Two Pair").unwrap(), ScoringHand::TwoPair);
+/// assert_eq!(
+///     ScoringHand::from_str("Two Pair").unwrap(),
+///     ScoringHand::TwoPair,
+/// );
 /// ```
 ///
 /// The scoring hands are provided in order of scoring precedence (reverse in
@@ -266,10 +269,10 @@ impl Scorer {
         }
 
         if suit_groups[0].1 == 5 && rank_groups[0].1 == 5 {
-            return Ok((
-                Some(ScoringHand::FlushFive),
-                vec![rank_groups[0].0; rank_groups[0].1],
-            ));
+            return Ok((Some(ScoringHand::FlushFive), vec![
+                rank_groups[0].0;
+                rank_groups[0].1
+            ]));
         }
 
         if rank_groups.len() >= 2
@@ -284,10 +287,10 @@ impl Scorer {
         }
 
         if rank_groups[0].1 == 5 {
-            return Ok((
-                Some(ScoringHand::FiveOfAKind),
-                vec![rank_groups[0].0; rank_groups[0].1],
-            ));
+            return Ok((Some(ScoringHand::FiveOfAKind), vec![
+                rank_groups[0].0;
+                rank_groups[0].1
+            ]));
         }
 
         if suit_groups[0].1 == 5 {
@@ -301,10 +304,10 @@ impl Scorer {
         }
 
         if rank_groups[0].1 == 4 {
-            return Ok((
-                Some(ScoringHand::FourOfAKind),
-                vec![rank_groups[0].0; rank_groups[0].1],
-            ));
+            return Ok((Some(ScoringHand::FourOfAKind), vec![
+                rank_groups[0].0;
+                rank_groups[0].1
+            ]));
         }
 
         if rank_groups.len() >= 2 && rank_groups[0].1 == 3 && rank_groups[1].1 == 2 {
@@ -326,10 +329,10 @@ impl Scorer {
         }
 
         if rank_groups[0].1 == 3 {
-            return Ok((
-                Some(ScoringHand::ThreeOfAKind),
-                vec![rank_groups[0].0; rank_groups[0].1],
-            ));
+            return Ok((Some(ScoringHand::ThreeOfAKind), vec![
+                rank_groups[0].0;
+                rank_groups[0].1
+            ]));
         }
 
         if rank_groups.len() >= 2 && rank_groups[0].1 == 2 && rank_groups[1].1 == 2 {
@@ -340,16 +343,16 @@ impl Scorer {
         }
 
         if rank_groups[0].1 == 2 {
-            return Ok((
-                Some(ScoringHand::Pair),
-                vec![rank_groups[0].0; rank_groups[0].1],
-            ));
+            return Ok((Some(ScoringHand::Pair), vec![
+                rank_groups[0].0;
+                rank_groups[0].1
+            ]));
         }
 
-        Ok((
-            Some(ScoringHand::HighCard),
-            vec![rank_groups[0].0; rank_groups[0].1],
-        ))
+        Ok((Some(ScoringHand::HighCard), vec![
+            rank_groups[0].0;
+            rank_groups[0].1
+        ]))
     }
 
     /// Score played cards and return the computed score.

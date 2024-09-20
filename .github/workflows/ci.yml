@@ -1,0 +1,117 @@
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - "**"
+
+name: CI
+
+jobs:
+  audit:
+    name: Audit
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: bp3d-actions/audit-check@9c23bd47e5e7b15b824739e0862cb878a52cc211
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+  fmt:
+    name: Rustfmt
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: nightly
+          components: rustfmt
+
+      - run: cargo +nightly fmt --all -- --check
+
+  docs_and_spell_check:
+    name: Docs and Spell Check
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      RUSTDOCFLAGS: "-Dwarnings"
+    steps:
+      - name: Checkout Actions Repository
+        uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: nightly
+
+      - name: Check spelling
+        uses: crate-ci/typos@master
+
+      - run: cargo +nightly doc --no-deps
+
+  clippy:
+    name: Clippy
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: nightly
+          components: clippy
+
+      - name: "Run clippy"
+        # we cannot use `--all-features` because `envman` has features that are mutually exclusive.
+        run: |
+          cargo +nightly clippy --workspace --all-features -- -D warnings
+
+  # coverage:
+  #   name: Coverage
+  #   runs-on: ubuntu-latest
+  #   timeout-minutes: 30
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - uses: dtolnay/rust-toolchain@master
+  #       with:
+  #         toolchain: nightly
+  #         components: llvm-tools-preview
+
+  #     - uses: taiki-e/install-action@cargo-llvm-cov
+  #     - uses: taiki-e/install-action@nextest
+
+  #     - name: "Configure build to remove debuginfo"
+  #       run: echo $"\n[profile.dev]\ndebug = false" >> Cargo.toml
+
+  #     - name: "Collect coverage"
+  #       run: ./coverage.sh
+
+  #     - name: "Print directory sizes"
+  #       run: du -sh target/coverage target/llvm-cov-target
+
+  #     - name: Upload to codecov.io
+  #       uses: codecov/codecov-action@v3
+  #       with:
+  #         files: ./target/coverage/lcov.info
+
+  build_and_test:
+    name: Build and Test (Linux)
+    timeout-minutes: 20
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: nightly
+
+      - uses: taiki-e/install-action@nextest
+      - name: "Build and test"
+        run: cargo +nightly nextest run --workspace --all-features
+
+  # TODO: Add examples build
+  # TODO: Add benchmark tests
+  # TODO: Add integration tests
+  # TODO: Add udeps check
