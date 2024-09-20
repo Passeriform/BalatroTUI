@@ -21,7 +21,7 @@ jobs:
       - uses: dtolnay/rust-toolchain@stable
 
       - name: Install cargo-workspaces
-      - uses: taiki-e/install-action@v2
+        uses: taiki-e/install-action@v2
         with:
           tool: cargo-workspaces
 
