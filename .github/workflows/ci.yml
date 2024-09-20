@@ -95,7 +95,7 @@ jobs:
   #         files: ./target/coverage/lcov.info
 
   build_and_test:
-    name: Build and Test (Linux)
+    name: Build and Test
     timeout-minutes: 20
     strategy:
       matrix:
