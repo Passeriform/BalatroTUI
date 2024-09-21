@@ -16,7 +16,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.DEPLOY_KEY }}
+
       - uses: chainguard-dev/actions/setup-gitsign@main
       - uses: dtolnay/rust-toolchain@stable
 
@@ -25,11 +28,18 @@ jobs:
         with:
           tool: cargo-workspaces
 
+      - name: Update version
+        run: |
+          cargo workspaces version ${{ inputs.release-type }} \
+            --yes \
+            --message "[Bump] Update master version to v{{version}}"
+
+
       - name: Publish to crates.io
         run: |
-          cargo workspaces publish ${{ inputs.release-type }} \
+          cargo workspaces publish prerelease \
             --yes \
             --all \
             --from-git \
-            --token "${{ secrets.CARGO_TOKEN }}" \
-            --message "[Release] Released version v{{version}}! 🚀"
+            --token ${{ secrets.CARGO_TOKEN }} \
+            --message "[Release] Release version v{{version}}! 🚀" \

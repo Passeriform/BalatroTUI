@@ -30,7 +30,6 @@ version = "0.1.0"
 [workspace.metadata.workspaces]
 exact = true
 no_individual_tags = true
-message = "[Release] Released version v{{version}}! 🚀"
 
 [workspace.lints.rust]
 warnings = { priority = -1, level = "warn" }
