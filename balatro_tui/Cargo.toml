@@ -34,7 +34,7 @@ crossterm = { version = "0.28.1", default-features = false, features = ["event-s
 futures = "0.3.30"
 human-panic = "2.0.1"
 itertools = "0.13.0"
-libc = "0.2.158"
+libc = "0.2.159"
 rand = "0.8.5"
 ratatui = "0.28.1"
 tokio = { version = "1.40.0", features = ["full"] }
