@@ -136,12 +136,9 @@ fn init_panic_hook() -> Result<()> {
         {
             eprintln!("{}", msg); // prints color-eyre stack trace to stderr
             use human_panic::{handle_dump, print_msg, Metadata};
-            let meta = Metadata {
-                version: env!("CARGO_PKG_VERSION").into(),
-                name: env!("CARGO_PKG_NAME").into(),
-                authors: env!("CARGO_PKG_AUTHORS").replace(':', ", ").into(),
-                homepage: env!("CARGO_PKG_HOMEPAGE").into(),
-            };
+            let meta = Metadata::new(env!("CARGO_PKG_NAME"), env!("CARGO_PKG_VERSION"))
+                .authors(env!("CARGO_PKG_AUTHORS").replace(':', ", "))
+                .homepage(env!("CARGO_PKG_HOMEPAGE"));
 
             let file_path = handle_dump(&meta, panic_info);
             // prints human-panic message
