@@ -2,6 +2,8 @@
 
 A minimal clone of Balatro built in Rust that runs in your terminal.
 
+![Demo Video](assets/demo.gif)
+
 > NOTE: This project is WIP. Please check [TODO](TODO) for feature tracking list.
 
 ---
