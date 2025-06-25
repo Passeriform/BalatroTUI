@@ -7,7 +7,7 @@
 ☐ Add power description for `Bosses` enum in enum description to show on widget
 ☐ Implement endless mode (ante calculation and bumping target scores)
 ☐ Shuffle should be deterministic based on the seed (accept argument to enable true shuffle)
-☐ Use `get_str()` and `get_int()` from strum when stablized (https://github.com/Peternator7/strum/issues/313)
+☐ Use `get_str()` and `get_int()` from strum when stabilized (https://github.com/Peternator7/strum/issues/313)
 ☐ Remove `ScoreError::AnteExceeded` when infinite ante is implemented
 ☐ Add animations to `Scorer`
 ☐ Remove deep variable access, access depth on self should be always one-level

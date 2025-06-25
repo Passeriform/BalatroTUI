@@ -5,8 +5,8 @@
 //! [`DeckConstExt`] and [`DeckExt`] traits must be brought into scope.
 
 use itertools::Itertools;
-use once_cell::sync::Lazy;
 use rand::{seq::SliceRandom, thread_rng};
+use std::sync::LazyLock;
 use strum::IntoEnumIterator;
 
 use super::card::{Card, Rank, Suit};
@@ -16,7 +16,7 @@ use crate::error::{ArithmeticError, CoreError};
 ///
 /// More decks can be added using lazy initialization with use of
 /// [`super::card::SuitIter`] and [`super::card::RankIter`].
-pub static DEFAULT_DECK: Lazy<Deck> = Lazy::new(|| {
+pub static DEFAULT_DECK: LazyLock<Deck> = LazyLock::new(|| {
     Rank::iter()
         .cartesian_product(Suit::iter())
         .map(|(rank, suit)| Card { rank, suit })
