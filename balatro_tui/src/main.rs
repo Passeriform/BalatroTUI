@@ -4,7 +4,7 @@
 //!
 //! All rights are reserved by `LocalThunk` for the original game.
 
-use color_eyre::{eyre::Context, Result};
+use color_eyre::{Result, eyre::Context};
 use game::Game;
 
 pub mod event;

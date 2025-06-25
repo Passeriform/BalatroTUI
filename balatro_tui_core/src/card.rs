@@ -150,9 +150,10 @@ impl Suit {
 /// Ace and all face cards score for 10 points. The score for a rank can be
 /// fetched using [`Self::get_score()`].
 ///
-/// Since, the cards are comparable values, [`Add`] and [`Sub`] implementations
-/// are provided for rank using their ordinal representation. `High Ace` must be
-/// considered by scoring implementation as it won't be wrapping.
+/// Since, the cards are comparable values, [`std::ops::Add`] and
+/// [`std::ops::Sub`] implementations are provided for rank using their ordinal
+/// representation. `High Ace` must be considered by scoring implementation as
+/// it won't be wrapping.
 ///
 /// <div class="warning">The rank ordinals are only used for internal use. For
 /// parsing use [`Rank::from_str()`] instead </div>
