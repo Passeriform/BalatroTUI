@@ -96,7 +96,7 @@ dependencies = [
 
 [[package]]
 name = "balatro_tui"
-version = "0.1.3"
+version = "0.1.4"
 dependencies = [
  "balatro_tui_core",
  "balatro_tui_widgets",
@@ -118,7 +118,7 @@ dependencies = [
 
 [[package]]
 name = "balatro_tui_core"
-version = "0.1.3"
+version = "0.1.4"
 dependencies = [
  "itertools",
  "rand",
@@ -129,7 +129,7 @@ dependencies = [
 
 [[package]]
 name = "balatro_tui_widgets"
-version = "0.1.3"
+version = "0.1.4"
 dependencies = [
  "balatro_tui_core",
  "bit-set",
