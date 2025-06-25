@@ -11,7 +11,7 @@ use crossterm::event::{Event as CrosstermEvent, EventStream, KeyEvent, KeyEventK
 use futures::{FutureExt, StreamExt};
 use tokio::{
     select, spawn,
-    sync::mpsc::{unbounded_channel, UnboundedReceiver, UnboundedSender},
+    sync::mpsc::{UnboundedReceiver, UnboundedSender, unbounded_channel},
     task::JoinHandle,
     time::interval,
 };
