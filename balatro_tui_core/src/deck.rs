@@ -4,9 +4,10 @@
 //! states. To utilize methods described on [`Deck`],
 //! [`DeckConstExt`] and [`DeckExt`] traits must be brought into scope.
 
+use std::sync::LazyLock;
+
 use itertools::Itertools;
 use rand::{seq::SliceRandom, thread_rng};
-use std::sync::LazyLock;
 use strum::IntoEnumIterator;
 
 use super::card::{Card, Rank, Suit};

@@ -2,19 +2,19 @@
 //! exit procedures to prepare rendering on the terminal.
 
 use std::{
-    io::{stderr, Stderr},
+    io::{Stderr, stderr},
     ops::{Deref, DerefMut},
     panic::set_hook,
     process::exit,
 };
 
-use color_eyre::{config::HookBuilder, eyre::Context, Result};
+use color_eyre::{Result, config::HookBuilder, eyre::Context};
 use crossterm::{
     cursor,
     event::{DisableMouseCapture, EnableMouseCapture},
-    terminal::{disable_raw_mode, enable_raw_mode, EnterAlternateScreen, LeaveAlternateScreen},
+    terminal::{EnterAlternateScreen, LeaveAlternateScreen, disable_raw_mode, enable_raw_mode},
 };
-use ratatui::{backend::CrosstermBackend as Backend, Terminal};
+use ratatui::{Terminal, backend::CrosstermBackend as Backend};
 use tracing::error;
 
 /// [`Tui`] is a thin wrapper over [`ratatui`] with [`crossterm`] backend
@@ -135,7 +135,7 @@ fn init_panic_hook() -> Result<()> {
         #[cfg(not(debug_assertions))]
         {
             eprintln!("{}", msg); // prints color-eyre stack trace to stderr
-            use human_panic::{handle_dump, print_msg, Metadata};
+            use human_panic::{Metadata, handle_dump, print_msg};
             let meta = Metadata::new(env!("CARGO_PKG_NAME"), env!("CARGO_PKG_VERSION"))
                 .authors(env!("CARGO_PKG_AUTHORS").replace(':', ", "))
                 .homepage(env!("CARGO_PKG_HOMEPAGE"));

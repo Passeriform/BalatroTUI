@@ -5,8 +5,8 @@ use ratatui::{
     symbols::Marker,
     text::Line,
     widgets::{
-        canvas::{Canvas, Circle},
         Widget,
+        canvas::{Canvas, Circle},
     },
 };
 
