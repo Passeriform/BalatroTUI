@@ -49,7 +49,7 @@ impl<'widget> SplashScreenWidget<'widget> {
     pub const fn new() -> Self {
         Self {
             splash: "",
-            message: ""
+            message: "",
         }
     }
 
@@ -85,16 +85,12 @@ impl<'widget> StatefulWidget for SplashScreenWidget<'widget> {
             > max(
                 splash_line
                     .width()
-                    .checked_add(1)
-                    .unwrap_or(usize::MAX)
-                    .checked_mul(FULL_PIXEL_WIDTH)
-                    .unwrap_or(usize::MAX),
+                    .saturating_add(1)
+                    .saturating_mul(FULL_PIXEL_WIDTH),
                 message_line
                     .width()
-                    .checked_add(1)
-                    .unwrap_or(usize::MAX)
-                    .checked_mul(QUADRANT_PIXEL_WIDTH)
-                    .unwrap_or(usize::MAX),
+                    .saturating_add(1)
+                    .saturating_mul(QUADRANT_PIXEL_WIDTH),
             );
 
         // Prepare areas
@@ -104,10 +100,8 @@ impl<'widget> StatefulWidget for SplashScreenWidget<'widget> {
             Constraint::Length(
                 stat_lines
                     .len()
-                    .checked_mul(2)
-                    .unwrap_or(usize::MAX)
-                    .checked_add(3)
-                    .unwrap_or(usize::MAX)
+                    .saturating_mul(2)
+                    .saturating_add(3)
                     .try_into()
                     .unwrap_or(u16::MAX),
             ),

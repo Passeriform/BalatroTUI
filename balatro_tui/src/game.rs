@@ -25,8 +25,8 @@ use balatro_tui_widgets::{
     SplashScreenWidget,
 };
 use color_eyre::{
-    eyre::{bail, Context, OptionExt},
     Result,
+    eyre::{Context, OptionExt, bail},
 };
 use crossterm::event::{KeyCode, KeyModifiers};
 use rand::{
@@ -34,10 +34,10 @@ use rand::{
     thread_rng,
 };
 use ratatui::{
+    Frame,
     layout::{Constraint, Flex, Layout, Margin, Rect},
     style::Color,
     widgets::{Block, BorderType, Borders},
-    Frame,
 };
 
 use crate::{

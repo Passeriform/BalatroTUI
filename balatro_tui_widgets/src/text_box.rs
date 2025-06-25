@@ -2,7 +2,7 @@ use ratatui::{
     buffer::Buffer,
     layout::{Alignment, Constraint, Flex, Layout, Margin, Rect},
     text::Line,
-    widgets::{block::Title, Block, BorderType, Widget},
+    widgets::{Block, BorderType, Widget, block::Title},
 };
 
 /// [`Widget`] to render vertically and horizontally centered text.
