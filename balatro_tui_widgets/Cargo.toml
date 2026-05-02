@@ -30,7 +30,7 @@ test = true
 balatro_tui_core = { path = "../balatro_tui_core", version = "0.1.1" }
 bit-set = "0.8.0"
 itertools = "0.13.0"
-ratatui = "0.28.1"
+ratatui = "0.29.0"
 thiserror = "1.0.64"
 tui-big-text = "0.6.0"
 
